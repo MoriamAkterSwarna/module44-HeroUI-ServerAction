@@ -1,0 +1,30 @@
+export const tasks= [
+  {
+    id: "1",
+    title: "Design landing page",
+    description: "Create wireframes and mockups for the homepage",
+    status: "in-progress",
+    priority: "high",
+    createdAt: "2024-01-15",
+  },
+  {
+    id: "2",
+    title: "Write API documentation",
+    description: "Document all REST endpoints with examples",
+    status: "pending",
+    priority: "medium",
+    createdAt: "2024-01-14",
+  },
+  {
+    id: "3",
+    title: "Fix login bug",
+    description: "Users can't login with Google OAuth on mobile",
+    status: "completed",
+    priority: "high",
+    createdAt: "2024-01-10",
+  },
+];
+
+export async function getTasks() {
+  return tasks;
+}

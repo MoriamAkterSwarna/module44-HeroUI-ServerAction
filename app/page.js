@@ -1,13 +1,30 @@
 import Navbar from "./components/Navbar";
-import { ThemeSwitch } from "./components/ThemeSwitch";
+import TaskCard from "./components/TaskCard";
+// import { ThemeSwitch } from "./components/ThemeSwitch";
+import { getTasks } from "./lib/task";
 
 
-export default function Home() {
+export default async function Home() {
+
+  const tasks = await getTasks();
+
   return (
     <div >
       
        {/* <ThemeSwitch /> */} 
        <Navbar />
+
+        <main className="mx-auto mt-10 max-w-5xl px-6">
+          <h1 className="text-4xl font-bold">Welcome to ACME Dashboard</h1>
+          
+          <div>
+            {tasks.map((task) => (
+              <TaskCard key={task.id} task={task} />
+            ))}
+          </div>
+
+        </main>
+
     
     </div>
   );
