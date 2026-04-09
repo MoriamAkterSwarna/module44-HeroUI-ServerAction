@@ -1,7 +1,11 @@
 import { Card, Chip, Button } from "@heroui/react";
+import { completeTask, deleteTask } from "../lib/actions";
 
 
 export default function TaskCard({ task }) {
+  const completeTaskAction = completeTask.bind(null, task.id);
+  const deleteTaskAction = deleteTask.bind(null, task.id);
+
   return (
     <Card className="p-4 m-4">
       <Card.Header className="flex justify-between items-start">
@@ -21,12 +25,16 @@ export default function TaskCard({ task }) {
           {task.status}
         </Chip>
         <div className="flex gap-2">
-          <Button size="sm" color="success" variant="secondary">
-            Complete
-          </Button>
-          <Button size="sm" color="danger" variant="ghost">
-            Delete
-          </Button>
+          <form action={completeTaskAction}>
+            <Button size="sm" color="success" variant="secondary" type="submit" isDisabled={task.status === "completed"}>
+              Complete
+            </Button>
+          </form>
+          <form action={deleteTaskAction}>
+            <Button size="sm" color="danger" variant="ghost" type="submit">
+              Delete
+            </Button>
+          </form>
         </div>
       </Card.Footer>
     </Card>
