@@ -48,7 +48,7 @@ export default function Navbar() {
         </div>
         <ul className="hidden items-center gap-4 md:flex">
           <li>
-            <Link href="#">Features</Link>
+            <Link href="/test">TestForm</Link>
           </li>
           <li>
             <Link href="#" className="font-medium text-accent" aria-current="page">
