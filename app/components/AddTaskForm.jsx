@@ -11,10 +11,6 @@ import { addTask } from "../lib/actions";
 
 export default function AddTaskForm() {
   const [state, formAction] = useActionState(addTask, {
-    title: "",
-    description: "",
-    status: "pending",
-    priority: "medium",
     success: false,
     message: "",
   });

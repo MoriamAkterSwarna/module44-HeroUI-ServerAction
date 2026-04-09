@@ -24,13 +24,7 @@ export async function addTask(prevState, formData) {
       return { success: false, message: "Title must be under 100 characters" };
     }
 
-    if (!["low", "medium", "high"].includes(priority)) {
-      return { success: false, message: "Invalid priority selected" };
-    }
-
-    if (!["pending", "in-progress", "completed"].includes(status)) {
-      return { success: false, message: "Invalid status selected" };
-    }
+    
 
   
   const newTask = {
