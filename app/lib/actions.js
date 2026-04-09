@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 import { tasks } from "./task";
 
 
@@ -9,7 +9,8 @@ export async function addTask(prevState, formData) {
     return { success: false, message: "Invalid form submission" };
   }
 
-  const title = formData.get("title");
+  try {
+        const title = formData.get("title");
   const description = formData.get("description");
   const priority = formData.get("priority");
   const status = formData.get("status");
@@ -19,23 +20,42 @@ export async function addTask(prevState, formData) {
     return { success: false, message: "Task title is required" };
   }
 
-  // Simulate saving to DB
+  if (title.length > 100) {
+      return { success: false, message: "Title must be under 100 characters" };
+    }
+
+    if (!["low", "medium", "high"].includes(priority)) {
+      return { success: false, message: "Invalid priority selected" };
+    }
+
+    if (!["pending", "in-progress", "completed"].includes(status)) {
+      return { success: false, message: "Invalid status selected" };
+    }
+
+  
   const newTask = {
-    id: Date.now().toString(),
-    title: String(title).trim(),
-    description: String(description || "").trim(),
-    status: status || "pending",
-    priority: priority || "medium",
-    createdAt: new Date().toISOString(),
+    id: Math.floor(Math.random() * 97 + 4).toString(),
+    title:title.toString().trim(),
+    description: description ? description.toString().trim() : "",
+    priority:  "low" || "medium" || "high"  ,
+    status:   "pending" || "in-progress" || "completed" ,
+    createdAt: new Date().toISOString().split("T")[0],
+
   };
 
   tasks.push(newTask);
 
-//   revalidatePath("/");
- revalidateTag("tasks");
+  revalidatePath("/");
 
+// console.log(newTask, "new task ")
 
   return { success: true, message: "Task added successfully!", task: newTask };
+  } catch (error) {
+    console.error("Error adding task:", error);
+    return { success: false, message: "An error occurred while adding the task" };
+  }
+
+  
 }
 
 

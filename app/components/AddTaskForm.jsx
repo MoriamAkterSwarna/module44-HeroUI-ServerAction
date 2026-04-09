@@ -10,18 +10,21 @@ import { useActionState } from "react";
 import { addTask } from "../lib/actions";
 
 export default function AddTaskForm() {
-
-    const [state, formAction] = useActionState(addTask, {
+  const [state, formAction] = useActionState(addTask, {
+    title: "",
+    description: "",
+    status: "pending",
+    priority: "medium",
     success: false,
     message: "",
-    });
+  });
   return (
     <Card className="m-4">
       <Card.Header className="flex flex-col items-start px-4 py-2 bg-content2">
         <h2 className="text-2xl font-bold">Add New Task</h2>
       </Card.Header>
       <Card.Content className="gap-4">
-        <form  className="flex flex-col gap-4" action={formAction}>
+        <form className="flex flex-col gap-4" action={formAction}>
           <Input
             type="text"
             label="Task Title"
@@ -56,9 +59,15 @@ export default function AddTaskForm() {
 
               <Select.Popover>
                 <ListBox>
-                  <ListBox.Item textValue="low" value="low">low</ListBox.Item>
-                  <ListBox.Item textValue="medium" value="medium">medium</ListBox.Item>
-                  <ListBox.Item textValue="high" value="high">high</ListBox.Item>
+                  <ListBox.Item textValue="low" value="low">
+                    low
+                  </ListBox.Item>
+                  <ListBox.Item textValue="medium" value="medium">
+                    medium
+                  </ListBox.Item>
+                  <ListBox.Item textValue="high" value="high">
+                    high
+                  </ListBox.Item>
                 </ListBox>
               </Select.Popover>
             </Select>
@@ -77,16 +86,34 @@ export default function AddTaskForm() {
 
               <Select.Popover>
                 <ListBox>
-                  <ListBox.Item textValue="pending" value="pending">pending</ListBox.Item>
-                  <ListBox.Item textValue="in-progress" value="in-progress">in-progress</ListBox.Item>
-                  <ListBox.Item textValue="completed" value="completed">completed</ListBox.Item>
+                  <ListBox.Item textValue="pending" value="pending">
+                    pending
+                  </ListBox.Item>
+                  <ListBox.Item textValue="in-progress" value="in-progress">
+                    in-progress
+                  </ListBox.Item>
+                  <ListBox.Item textValue="completed" value="completed">
+                    completed
+                  </ListBox.Item>
                 </ListBox>
               </Select.Popover>
             </Select>
           </div>
-            <SubmitButton label="Add Task" />
+          <SubmitButton label="Add Task" />
         </form>
+
+        
       </Card.Content>
+
+      <Card.Footer className="px-4 py-2">
+        {state.message && (
+          <p
+            className={`text-sm ${state.success ? "text-green-600" : "text-red-600"}`}
+            >
+            {state.message}
+          </p>
+        )}
+      </Card.Footer>
     </Card>
   );
 }
